@@ -41,6 +41,31 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    
+
+
+        <script>
+
+                $(document).ready(function() {
+
+                    $("#states").select2({
+
+                            placeholder: "Select a State",
+
+                            /* allowClear: true */
+
+                    });
+                    $(document).ready(function() {
+                    $('.basic-select').select2();
+                    });
+
+                });
+
+        </script>
+
     
 </head>
 
@@ -53,7 +78,7 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
             <!--logo start-->
             <div class="brand">
                 <a href="{{route('admin.index')}}" class="logo">
-                    ADMIN
+                    
                 </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
@@ -69,23 +94,10 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                             <input type="text" name="search" value="{{  $_GET['search'] ?? ''  }}" class="form-control search" placeholder=" Search">
                         </form>
                     </li>
+                    <li>
                     <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" src="{{asset('backend/images/3.png')}}">
-                            <span class="username">
-                                <!-- Hiện thị tên của người dùng đăng nhập về
-                                    được lấy từ hàm dashboard của AdminController
-                                -->
-                                
-                            </span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                            <li><a href="{{ route('admin.logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
-                        </ul>
+                        <button class="form-control login"></button>
+                        </li>
                     </li>
                     <!-- user login dropdown end -->
 
@@ -106,104 +118,70 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                                 <span>Tổng quan</span>
                             </a>
                         </li>
-
+                        <!-- Liệt kê -->
+                        
+                        
+                        <!-- Thêm Đơn -->
                         <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.all_category']) ? 'active' : '' }}">
-                                <i class="fa fa-book"></i>
-                                <span>Danh mục sản phẩm</span>
+                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.new_don_KD','admin.new_don_GPHI']) ? 'active' : '' }}">
+                                
+                                <span>Thêm Đơn</span>
                             </a>
-                            <ul class="sub" style="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.all_category']) ? 'display: block;' : 'display: none;' }}">
-                                <li class="{{ Route::currentRouteName() == 'admin.new_category' ? 'active' : '' }}"><a href="{{ route('admin.new_category') }}">Thêm danh mục</a></li>
-                                <li class="{{ Route::currentRouteName()=='admin.all_category' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.all_category') }}">Liệt kê danh mục</a>
+                            <ul class="sub" style="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.new_don_KD','admin.new_don_gphi']) ? 'display: block;' : 'display: none;' }}">
+                                <li class="{{ Route::currentRouteName() == 'admin.new_category' ? 'active' : '' }}">
+                                    <a href="{{ route('admin.new_category') }}">Nhãn hiệu (NH/NHTT/NHCN)</a></li>
+                                
+                                <li class="{{ Route::currentRouteName() == 'admin.new_don_KD' ? 'active' : '' }}">
+                                    <a href="{{ route('admin.new_don_KD') }}">Kiểu dáng/Kiểu dáng công nghiệp (KD/KDCN)</a>
+                                </li>
+                                <li class="{{ Route::currentRouteName() == 'admin.new_don_GPHI' ? 'active' : '' }}">
+                                    <a href="{{ route('admin.new_don_GPHI') }}">Sáng chế/Giải pháp hữu ích (SC/GPHI)</a>
                                 </li>
                                 
                             </ul>
                         </li>
-                        <!-- thương hiệu -->
+                        <!-- Thêm Bằng -->
                         <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.all_brand', 'admin.add_brand']) ? 'active' : '' }}">
-                                <i class="fa-brands fa-bandcamp"></i>
-                                <span>Thương hiệu sản phẩm</span>
+                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['', 'admin.add_brand']) ? 'active' : '' }}">
+                                
+                                <span>Thêm Bằng</span>
                             </a>
                             <ul class="sub">
                                 <li class="{{ Route::currentRouteName() == 'admin.add_brand' ? 'active': '' }}">
-                                    <a href="{{ route('admin.add_brand' )}}">Thêm thương hiệu</a>
+                                    <a href="{{ route('admin.add_brand' )}}">Nhãn hiệu (NH)</a>
                                 </li>
                                 <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
-                                    <a href="{{route('admin.all_brand')}}">Liệt kê thương hiệu</a>
+                                    <a href="{{route('admin.all_brand')}}">Nhãn hiệu tập thể (NHTT)</a>
+                                </li>
+                                <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
+                                    <a href="{{route('admin.all_brand')}}">Kiểu dáng công nghiệp (KDCN)</a>
+                                </li>
+                                <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
+                                    <a href="{{route('admin.all_brand')}}">Sáng chế/Giải pháp hữu ich (SC/GPHI)</a>
                                 </li>
                                 
                             </ul>
                         </li>
 
-                        <!-- sản phẩm -->
+                       
+                        <!-- thống kê -->
                         <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.all_product', 'admin.add_product']) ? 'active' : '' }}">
-                                <i class="fa-solid fa-box"></i>
-                                <span>Sản phẩm</span>
-                            </a>
-                            <ul class="sub">
-                                <li class="{{Route::currentRouteName() == 'admin.add_product' ? 'active':''}}">
-                                    <a href="{{route('admin.add_product')}}">Thêm sản phẩm</a>
-                                </li>
-                                <li class="{{Route::currentRouteName() == 'admin.all_product' ? 'active':''}}">
-                                    <a href="{{route('admin.all_product')}}">Liệt kê sản phẩm</a>
-                                </li>
+                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.all_brand', 'admin.all_category']) ? 'active' : '' }}">
                                 
-                            </ul>
-                        </li>
-                        <!-- don hang -->
-                        <li class="">
-                            <a href="{{route('admin.manage_order')}}"class="{{ Route::currentRouteName() == 'admin.manage_order' ? 'active' : '' }}">
-                              <i class="fa-solid fa-list-check"></i>
-                                <span>Quản lý đơn hàng</span>
-                            </a>
-                           
-                        </li>
-
-                         <!-- thống kê -->
-                         <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), 
-                            ['admin.revenue_statistic', 'admin.user_statistic','admin.order_statistic','admin.chart_statistic']) ? 'active' : '' }}">
-                                <i class="fa-solid fa-chart-column"></i>
                                 <span>Thống kê</span>
                             </a>
-                            <ul class="sub">
-                                <li class="{{ Route::currentRouteName() == 'admin.revenue_statistic' ? 'active' : '' }}">
-                                    <a href="{{route('admin.revenue_statistic')}}">Thống kê theo doanh thu</a>
+                            <ul class="sub" style="{{ in_array(Route::currentRouteName(), ['admin.all_brand', 'admin.all_category']) ? 'display: block;' : 'display: none;' }}">
+                                
+                                <li class="{{ Route::currentRouteName()=='admin.all_category' ? 'active' : '' }}">
+                                    <a href="{{ route('admin.all_category') }}">Tất cả Đơn</a>
                                 </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.user_statistic' ? 'active' : '' }}">
-                                    <a href="{{route('admin.user_statistic')}}">Thống kê theo khách hàng</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.order_statistic' ? 'active' : '' }}">
-                                    <a href="{{route('admin.order_statistic')}}">Thống kê theo đơn hàng</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.chart_statistic' ? 'active' : '' }}">
-                                    <a href="{{route('admin.chart_statistic')}}">Biểu đồ thống kê</a>
+                                <li class="{{ Route::currentRouteName()=='admin.all_brand' ? 'active' : '' }}">
+                                    <a href="{{ route('admin.all_brand') }}">Tất cả Bằng</a>
                                 </li>
                                 
                             </ul>
                         </li>
                         
-                        <!-- khuyến mãi -->
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.all_coupon', 'admin.apply_coupon']) ? 'active' : '' }}">
-                               <i class="fa-solid fa-tags"></i>
-                                <span>Khuyến mãi</span>
-                            </a>
-                            <ul class="sub">
-                                <li class="{{ Route::currentRouteName() == 'admin.apply_coupon' ? 'active' : '' }}">
-                                    <a href="{{route('admin.apply_coupon')}}">Áp dụng khuyến mãi</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.all_coupon' ? 'active' : '' }}">
-                                    <a href="{{route('admin.all_coupon')}}">Quản lý khuyến mãi</a>
-                                </li>
-                                
-                            </ul>
-                        </li>
-                        
-                       
                     </ul>
                 </div>
                 <!-- sidebar menu end-->
@@ -247,86 +225,6 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
         function gd(year, day, month) {
             return new Date(year, month - 1, day).getTime();
         }
-
-        // graphArea2 = Morris.Area({
-        //     element: 'hero-area',
-        //     padding: 10,
-        //     behaveLikeLine: true,
-        //     gridEnabled: false,
-        //     gridLineColor: '#dddddd',
-        //     axes: true,
-        //     resize: true,
-        //     smooth: true,
-        //     pointSize: 0,
-        //     lineWidth: 0,
-        //     fillOpacity: 0.85,
-        //     data: [{
-        //             period: '2015 Q1',
-        //             iphone: 2668,
-        //             ipad: null,
-        //             itouch: 2649
-        //         },
-        //         {
-        //             period: '2015 Q2',
-        //             iphone: 15780,
-        //             ipad: 13799,
-        //             itouch: 12051
-        //         },
-        //         {
-        //             period: '2015 Q3',
-        //             iphone: 12920,
-        //             ipad: 10975,
-        //             itouch: 9910
-        //         },
-        //         {
-        //             period: '2015 Q4',
-        //             iphone: 8770,
-        //             ipad: 6600,
-        //             itouch: 6695
-        //         },
-        //         {
-        //             period: '2016 Q1',
-        //             iphone: 10820,
-        //             ipad: 10924,
-        //             itouch: 12300
-        //         },
-        //         {
-        //             period: '2016 Q2',
-        //             iphone: 9680,
-        //             ipad: 9010,
-        //             itouch: 7891
-        //         },
-        //         {
-        //             period: '2016 Q3',
-        //             iphone: 4830,
-        //             ipad: 3805,
-        //             itouch: 1598
-        //         },
-        //         {
-        //             period: '2016 Q4',
-        //             iphone: 15083,
-        //             ipad: 8977,
-        //             itouch: 5185
-        //         },
-        //         {
-        //             period: '2017 Q1',
-        //             iphone: 10697,
-        //             ipad: 4470,
-        //             itouch: 2038
-        //         },
-
-        //     ],
-        //     lineColors: ['#eb6f6f', '#926383', '#eb6f6f'],
-        //     xkey: 'period',
-        //     redraw: true,
-        //     ykeys: ['iphone', 'ipad', 'itouch'],
-        //     labels: ['All Visitors', 'Returning Visitors', 'Unique Visitors'],
-        //     pointSize: 2,
-        //     hideHover: 'auto',
-        //     resize: true
-        // });
-
-
     });
     </script>
     <!-- calendar -->

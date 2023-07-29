@@ -2,28 +2,81 @@
 @section('admin_content')
 
 <div class="row">
-    
             <div class="col-lg-12">
-           
+    
                     <section class="panel">
                         <header class="panel-heading">
-                            Cập nhật danh mục sản phẩm
+                            Chỉnh sửa Bằng
                         </header>
                         
                             <div class="panel-body">
-                          @foreach($edit_brand_product as $key => $edit_value)
+                          @foreach($edit_bang as $key => $edit_value)
                             <div class="position-center">
-                                <form role="form" method="post" action="{{route('admin.update_brand',['brand_id' =>$edit_value->brand_id ])}}">
+                                <form role="form" method="post" action="{{route('admin.update_brand',['bang_id' =>$edit_value->bang_id , 'don_id'=>$edit_value->don_id])}}">
                                     {{csrf_field()}}
-                                   
-                                <div class="form-group">
-                                    <label for="">Tên danh mục</label>
-                                    <input type="text" name="brand_product_name" value="{{$edit_value->brand_name}}" class="form-control" placeholder="Nhập tên danh mục">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mô tả danh mục</label>
-                                    <textarea type="password" style="resize:none;" rows="6"
-                                    name="brand_product_desc" class="form-control" id="exampleInputPassword1" placeholder="Mô tả">{{$edit_value->brand_desc}}</textarea>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-3 form-group">    
+                                                <span class="text-danger">* </span><label for="">Mã Bằng: {{$edit_value->bang_id}}</label>
+                                                
+                        
+                                            @error('bang_id')
+                                                            <span class="text-danger" style="color: red">{{ $message }} </span>
+                                             @enderror    
+                                            </div>
+                                            <div class="col-sm-4     form-group">
+                                                <span class="text-danger">* </span> <label for="">Mã Đơn</label>
+                                                <select class="basic-select col-sm-12 form-group" id="states" name="don_id"  value="{{ $edit_value->don_id }}"  >
+
+                                                    
+                                                    @foreach($don as $key=>$don)
+                                                        
+
+                                                        @if($don->don_id == $edit_value->don_id)
+                                                        
+                                                        <option selected value="{{$don->don_id}}" >{{$don->don_id}}</option>
+                                                        @else
+                                                        <option value="{{$don->don_id}}" >{{$don->don_id}}</option>
+                                                        @endif
+
+                                                    @endforeach
+                                                   
+                                                    
+                                                </select>
+                                                @error('don_id')
+                                                            <span class="text-danger" style="color: red">{{ $message }} </span>
+                                                    @enderror
+            
+                                                </div>
+                                            <div class="col-sm-3 form-group">    
+                                                <span class="text-danger">* </span><label for="">Ngày cấp</label>
+                                                <input type="date" name="NgayCap" class="form-control text-center"  value="{{ $edit_value->ngayCap }}">
+                                                @error('NgayCap')
+                                                                <span class="text-danger" style="color: red">{{ $message }} </span>
+                                                @enderror
+                                                </div>
+                                            </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-3 form-group">    
+                                                <span class="text-danger">* </span><label for="">Ngày hiệu lực</label>
+                                                <input type="date" name="NgayHieuLuc" class="form-control text-center"  value="{{ $edit_value->ngayHieuLuc }}">
+                                                @error('NgayHieuLuc')
+                                                                <span class="text-danger" style="color: red">{{ $message }} </span>
+                                                @enderror
+                                                </div>
+                                            
+                                            <div class="col-sm-4 form-group">    
+                                                <span class="text-danger">* </span><label for="">Ngày kết thúc</label>
+                                                <input type="date" name="NgayKetThuc" class="form-control text-center"  value="{{ $edit_value->ngayKetThuc }}">
+                                                @error('NgayKetThuc')
+                                                                <span class="text-danger" style="color: red">{{ $message }} </span>
+                                                @enderror
+                                                </div>
+                                            
+                                        </div>
+                                
+                                
                                 </div>
                                 
                             
