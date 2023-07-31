@@ -142,7 +142,8 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                         </li>
                         <!-- Thêm Bằng -->
                         <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['', 'admin.add_brand']) ? 'active' : '' }}">
+                            <a href="{{ route('admin.add_brand' )}}">Thêm bằng</a>
+                            <!-- <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['', 'admin.add_brand']) ? 'active' : '' }}">
                                 
                                 <span>Thêm Bằng</span>
                             </a>
@@ -160,7 +161,7 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                                     <a href="{{route('admin.all_brand')}}">Sáng chế/Giải pháp hữu ich (SC/GPHI)</a>
                                 </li>
                                 
-                            </ul>
+                            </ul> -->
                         </li>
 
                        

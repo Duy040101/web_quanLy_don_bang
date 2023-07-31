@@ -17,7 +17,7 @@
     {{csrf_field()}}
             <div class="col-lg-12">
             @foreach($bang_detail as $detail)
-                @if($detail->loai_id<4)
+                @if($detail->loai_id<=4)
                     <section class="panel">
                         <header class="panel-heading">
                             Thông tin bằng {{$detail->don_id}}
@@ -50,24 +50,27 @@
                                         <tr>
                                             <th>(540):</th>
                                             <td rowspan="5"> <img src="{{asset('upload/'.$detail->image)}}" alt=""  style="max-height: 600px;max-width:90%"></td>
-                                            <th>(441):</th>
-                                            <td> {{$detail->ngayCongBo}}</td>
+                                            <th>(731):</th>
+                                            <td rowspan="2">{{$detail->congTy_ten}} <br>
+                                            <div style="left: 10px;">{{$detail->congTy_diaChi}}</div>
+                                            
+                                            </td>
+                                           
                                         </tr>
-                                        <tr>
+                                        
                                         <tr>
                                             <th rowspan="4"></th>
+                                            
+                                            <th rowspan="2"></th>
                                         </tr>
                                             
                                         </tr>
                                        
                                         <tr>
-                                            <th>(731):</th>
-                                            <td rowspan="2">{{$detail->congTy_ten}} <br>
-                                            <div style="left: 10px;">{{$detail->congTy_diaChi}}</div>
-                                            </td>
+                                            
                                         </tr>
                                         <tr > 
-                                            <th rowspan="2"></th>
+                                            
                                         </tr>
                                         <tr>
                                            
@@ -133,7 +136,7 @@
 
                             </div>
                     </section>
-                @elseif($detail->loai_id==4)
+                @elseif($detail->loai_id==5)
                 <section class="panel">
                         <header class="panel-heading">
                             Thông tin bằng {{$detail->don_id}} KD
@@ -227,7 +230,7 @@
 
                             </div>
                     </section>
-                    @elseif($detail->loai_id==5)
+                    @elseif($detail->loai_id==6)
                     <section class="panel">
                         <header class="panel-heading">
                             Thông Tin bằng {{$detail->don_id}} (GPHI/SC)

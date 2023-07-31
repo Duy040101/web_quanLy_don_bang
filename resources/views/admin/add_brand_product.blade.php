@@ -6,7 +6,7 @@
            
                     <section class="panel">
                         <header class="panel-heading">
-                            Thêm Bằng (NH)
+                            Thêm Bằng
                         </header>
                        
                             <div class="panel-body">
@@ -18,7 +18,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-4 form-group">    
-                                                <span class="text-danger">* </span><label for="">Mã Bằng (111)</label>
+                                                <span class="text-danger">* </span><label for="">Mã Bằng (111)/(11)</label>
                                                 
                                             <input type="text" name="bang_id" class="form-control text-center" placeholder="Nhập mã bằng" value="{{ old('bang_id') }}">
                                             @error('bang_id')
@@ -26,10 +26,8 @@
                                              @enderror    
                                             </div>
                                             <div class="col-sm-4     form-group">
-                                                <span class="text-danger">* </span> <label for="">Mã Đơn (210)</label>
+                                                <span class="text-danger">* </span> <label for="">Mã Đơn (210)/(21)</label>
                                                 <select class="basic-select col-sm-12 form-group" id="states" name="don_id_old"  value="{{ old('don_id_old') }}"  >
-
-                                                    <option value="-1" >--Thêm mới--</option>
                                                     @foreach($don as $key=>$don)
                                                     <option value="{{$don->don_id}}" >{{$don->don_id}}</option>
                                                     
@@ -43,7 +41,7 @@
             
                                                 </div>
                                             <div class="col-sm-4 form-group">    
-                                                <span class="text-danger">* </span><label for="">Ngày cấp Bằng (151)</label>
+                                                <span class="text-danger">* </span><label for="">Ngày cấp Bằng (151)/(15)</label>
                                                 <input type="date" name="NgayCap" class="form-control text-center"  value="{{ old('NgayCap') }}">
                                                 @error('NgayCap')
                                                                 <span class="text-danger" style="color: red">{{ $message }} </span>
@@ -53,7 +51,7 @@
                                         
                                         <div class="row">
                                             <div class="col-sm-4 form-group">    
-                                                <span class="text-danger">* </span><label for="">Ngày công bố Bằng (450)</label>
+                                                <span class="text-danger">* </span><label for="">Ngày công bố Bằng(450)/(45)</label>
                                                 <input type="date" name="NgayHieuLuc" class="form-control text-center"  value="{{ old('NgayHieuLuc') }}">
                                                 @error('NgayHieuLuc')
                                                                 <span class="text-danger" style="color: red">{{ $message }} </span>
@@ -61,7 +59,7 @@
                                                 </div>
                                             
                                             <div class="col-sm-4 form-group">    
-                                                <span class="text-danger">* </span><label for="">Ngày hết hạn hiệu lực (181)</label>
+                                                <span class="text-danger">* </span><label for="">Ngày hết hiệu lực (181)/(18)</label>
                                                 <input type="date" name="NgayKetThuc" class="form-control text-center"  value="{{ old('NgayKetThuc') }}">
                                                 @error('NgayKetThuc')
                                                                 <span class="text-danger" style="color: red">{{ $message }} </span>
@@ -83,7 +81,7 @@
                                         };
                                 </script>    
                                 <!-- Thông tin đơn mới -->    
-                                <div id="addDon">
+                                <!-- <div id="addDon">
                                     
                                          <header class="panel-heading">
                                             Thêm thông tin Đơn (NH)
@@ -146,7 +144,7 @@
                                         
                                         <br>
 
-                                        <!-- Button trigger modal -->
+                                        
                                         <button type="button" class="btn btn-success btn-sm open_modal" data-toggle="modal"
                                             data-target="#myModal1">
                                             Thêm nhóm
@@ -199,10 +197,10 @@
                                             
 
                                         <p id="kq"></p>
-                                        <!-- Thêm thông tin bảo hộ cho nhóm -->
+                                        
                                         <script>
                                             function addNhom(){
-                                                var nhom = <?php echo(json_encode($nhom)); ?>; 
+                                                var nhom = <?php //echo(json_encode($nhom)); ?>; 
                                                 
                                                 var arr = document.getElementsByName("nhom[]");
                                                 var str = "";
@@ -217,7 +215,7 @@
                                             }
                                         
                                         </script>
-                                        <!-- Modal chọn các nhóm -->
+                                        
                                         <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 
@@ -236,7 +234,7 @@
                                                                 <div id="nhom_{{$nhom->nhom_id}}" class="col-sm-4 form-group" >
                                                                     <label for="nhom[]"  >{{$nhom->nhom_ten}}</label>
                                                                     <input  type="checkbox" name="nhom[]" value="{{$nhom->nhom_id}}"/> </div> 
-                                                                 <!-- Hiển thị thông tin nhóm -->
+                                                                 
                                                                  <script>
                                                                     document.getElementById("nhom_"+{{$nhom->nhom_id}}).onmouseover= function () {
                                                                     str ="<br> <b>Chi tiết nhóm {{$nhom->nhom_id}}</b> <br>"+`{{$nhom->nhom_chiTiet}}`;
@@ -267,7 +265,7 @@
                             
                                             </div>
                                     </div>
-                                    <!-- Ẩn/hiện các trường thêm thông tin công ty -->
+                                    
                                         <script>
                                             document.getElementById("thongTinCT").onchange= function () {
                                                     if (document.getElementById("thongTinCT").value<0){
@@ -280,7 +278,7 @@
                                                     }
                                                 };
                                         </script>
-                                    <!-- Thông tin công ty -->
+                                    
                                 <div id="addCongTy">
                                         <h2 class="panel-heading">
                                             Thêm Thông tin đơn vị nộp đơn
@@ -324,7 +322,7 @@
                                 </div>
                                 </div>   
                                 </div>
-                                </div>
+                                </div> -->
                                 </div>
                                 
                                 <button type="submit" class="btn btn-info" name="save_brand_product">Thêm</button>

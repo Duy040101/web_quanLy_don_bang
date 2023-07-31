@@ -59,7 +59,13 @@
           <br>
         <button class="active btn btn-sm btn-success ">Áp dụng</button>
         </div>
-        </form>                
+        </form>
+        <br>
+        
+        <a href="{{ route('admin.print_to_excel') }}"
+                 class="active btn btn-sm btn-success " ui-toggle-class="">
+                 Xuất ra excel
+              </a>                
       </div>
       <div class="col-sm-4">
       </div>

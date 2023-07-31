@@ -93,6 +93,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/active/{brand_id}',[BangController::class,'active_brand_product'])
         ->name('admin.active_brand');
         Route::get('detail/{bang_id},{don_id}',[BangController::class,'bang_detail'])->name('admin.bang_detail');
+        Route::get('xuatExcel',[BangController::class,'print_to_excel'])->name('admin.print_to_excel');
     });
     
    

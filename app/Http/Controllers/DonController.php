@@ -15,7 +15,7 @@ class DonController extends Controller
     public function add_don_NH(){
         $congTy=DB::table('congty')->get();
         $huyen=DB::table('huyen')->get();
-        $loai=DB::table('loai')->limit(3)->get();
+        $loai=DB::table('loai')->limit(4)->get();
         $nhom=DB::table('nhom')->get();
         return view('admin.add_category_product')->with('loai',$loai)
                                                 ->with('huyen',$huyen)

@@ -17,7 +17,7 @@
     {{csrf_field()}}
             <div class="col-lg-12">
             @foreach($don_detail as $detail)
-                @if($detail->loai_id<4)
+                @if($detail->loai_id<=4)
                     <section class="panel">
                         <header class="panel-heading">
                             Thông Tin đơn {{$detail->don_id}}
@@ -123,7 +123,7 @@
 
                             </div>
                     </section>
-                @elseif($detail->loai_id==4)
+                @elseif($detail->loai_id==5)
                 <section class="panel">
                         <header class="panel-heading">
                             Thông Tin đơn {{$detail->don_id}} KD
@@ -203,7 +203,7 @@
 
                             </div>
                     </section>
-                    @elseif($detail->loai_id==5)
+                    @elseif($detail->loai_id==6)
                     <section class="panel">
                         <header class="panel-heading">
                             Thông Tin đơn {{$detail->don_id}} (GPHI/SC)

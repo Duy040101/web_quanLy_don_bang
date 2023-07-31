@@ -7,6 +7,8 @@ use Session;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class BangController extends Controller
 {
@@ -14,7 +16,7 @@ class BangController extends Controller
         $don=DB::table('don')->get();
         $congTy=DB::table('congty')->get();
         $huyen=DB::table('huyen')->get();
-        $loai=DB::table('loai')->limit(3)->get();
+        $loai=DB::table('loai')->limit(4)->get();
         $nhom=DB::table('nhom')->get();
         
         return view('admin.add_brand_product')->with('don',$don)
@@ -314,6 +316,112 @@ class BangController extends Controller
         
       
       }
+
+      public function print_to_excel(Request $request){
+
+        $search = $request->search ?? '';
+        $data=$request;
+        $huyen=DB::table('huyen')->get();
+        $loai=DB::table('loai')->get();
+        /* $all_brand_product = DB::table('brand')->where('brand_name','like',"%$search%")->paginate(5); */ 
+        $all_bang = DB:: table('bang')->join('don','bang.don_id','don.don_id')->join('congty','congty.congTy_id','don.congTy_id')->join('huyen','congty.huyen_id','huyen.huyen_id')
+                            ->where('don.don_id','like',"%$search%")
+                            ->orwhere('congty.congTy_ten','like',"%$search%")
+                            ->orwhere('congty.congTy_diaChi','like',"%$search%")
+                            ->orwhere('huyen.huyen_ten','like',"%$search%")
+                            ->orwhere('bang.bang_id','like',"%$search%")
+                            ->get();
+        if($request->huyen!=0){
+            $all_bang=$all_bang->where('huyen_id',$request->huyen);
+        }
+        if($request->loai!=0){
+            $all_bang=$all_bang->where('loai_id',$request->loai);
+        }
+        if($request->nam!=0){
+            $all_bang=$all_bang->where('nam',$request->nam);
+        }
+        
+        
+		$excel = new PHPExcel();
+		$excel->createSheet();
+		$activeSheet = $excel->setActiveSheetIndex(1);
+		$activeSheet->setTitle( "Dữ bằng NH,NHTT,NHCN,CDĐL" );
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+		$excel->getActiveSheet()->getColumnDimension('B')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('I')->setWidth(30);
+		$excel->getActiveSheet()->getStyle('A2:I2')->getFont()->setBold(true);
+
+		$activeSheet->setCellValue('A2', 'STT')
+			->setCellValue('B2', '(111) Mã bằng')
+			->setCellValue('C2', '(151) Ngày cấp bằng bằng')
+			->setCellValue('D2', '(210) Mã đơn')
+			->setCellValue('E2', '(220) Ngày nộp đơn')
+			->setCellValue('F2', '(181) Ngày hết hạn hiệu lực')
+			->setCellValue('G2', '(450) Ngày công bố bằng')
+			->setCellValue('H2', '(731) Tên đơn vị nộp đơn và địa chỉ')
+			->setCellValue('I2', '(511) Thông tin các nhóm  bảo hộ' );
+            
+
+		$numRow = 3;
+		$stt = 1;
+		foreach ($all_bang as $value) {
+                $nhom=DB::table('bang')->join('don','don.don_id','bang.don_id')
+                                ->join('nhomLienKet','don.don_id','nhomLienKet.don_id')
+                                ->join('nhom','nhom.nhom_id','nhomLienKet.nhom_id')->get();
+                $nhom_data=""; 
+                foreach($nhom as $nhom){
+                    $nhom_data=$nhom_data.$nhom->nhom_ten." ".$nhom->chiTiet.'chr(13)';
+                }
+                $stt_string=''.$stt;
+				$excel->getActiveSheet()->setCellValue('A' . $numRow, $stt_string);
+			    $excel->getActiveSheet()->setCellValue('B' . $numRow, $value->bang_id);
+			    $excel->getActiveSheet()->setCellValue('C' . $numRow, $value->ngayCap );			    
+			    $excel->getActiveSheet()->setCellValue('D' . $numRow, $value->don_id );
+			    $excel->getActiveSheet()->setCellValue('E' . $numRow, $value->ngayNop );
+			    $excel->getActiveSheet()->setCellValue('F' . $numRow, $value->ngayKetThuc);
+			    $excel->getActiveSheet()->setCellValue('G' . $numRow, $value->ngayHieuLuc);
+			    $excel->getActiveSheet()->setCellValue('H' . $numRow, $value->congTy_ten.'chr(13)'.$value->congTy_diaChi);
+			    $excel->getActiveSheet()->setCellValue('I' . $numRow, $nhom_data );
+
+			    $numRow++;
+
+			    /* $excel->getActiveSheet()->setCellValue('E' . $numRow, $value->getDataNguoiHuongDan( 'ten' ) );
+			    $excel->getActiveSheet()->setCellValue('F' . $numRow, $value->getDataDiem( 'diem', 'nguoi-huong-dan' ) );
+			    $excel->getActiveSheet()->setCellValue('G' . $numRow, $value->getDataDiem( 'nhanxet', 'nguoi-huong-dan' ) );
+			    $excel->getActiveSheet()->setCellValue('H' . $numRow, $value->getNgayBatDauThucTap() );
+			    $excel->getActiveSheet()->setCellValue('I' . $numRow, $value->getNgayKetThucThucTap() ); */
+
+			    $numRowMergePrevious = $numRow - 1;
+			    /* $activeSheet->mergeCells("A$numRowMergePrevious:A$numRow");
+			    $activeSheet->mergeCells("B$numRowMergePrevious:B$numRow");
+			    $activeSheet->mergeCells("C$numRowMergePrevious:C$numRow");
+			    $activeSheet->mergeCells("D$numRowMergePrevious:D$numRow"); */
+
+				$numRow++;
+				$stt++;
+		}
+        //PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('duLieuBang.xlsx');
+
+		header('Content-type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment; filename="duLieuBang.xlsx"');
+        ob_end_clean();
+		PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('php://output'); //Khi up site thày thành Excel5
+
+        
+        
+       
+        return to_route('admin.all_brand')->with('success', 'Xuất file thành công') ;
+    
+  
+  }
+
 
     //   end admin
     
