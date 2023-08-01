@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use PHPExcel;
+use PHPExcel_IOFactory;
 @include('sweetalert::alert');
 
 session_start();
@@ -54,7 +56,7 @@ class DonController extends Controller
             $don=$don->where('loai_id',$request->loai);
         }
         if($request->nam!=0){
-            $all_bang=$all_bang->where('nam',$request->nam);
+            $don=$don->where('nam',$request->nam);
         }       
         
         return view('admin.all_don')->with('don', $don)
@@ -788,10 +790,101 @@ class DonController extends Controller
             if($congTy==NULL){
                 DB::table('congty')->where('congTy_id',$congTy_id)->delete();
             }
+            DB::table('nhomLienKet')->where('don_id',$don_id)->delete();
             return to_route('admin.all_category')->with('success', 'Xóa đơn thành công');
         }
       
       }
+
+      public function print_to_excel(Request $request){
+
+        $search = $request->search ?? '';
+        $data=$request;
+        $huyen=DB::table('huyen')->get();
+        $loai=DB::table('loai')->get();
+        /* $all_brand_product = DB::table('brand')->where('brand_name','like',"%$search%")->paginate(5); */ 
+        $all_don = DB:: table('don')->join('congty','congty.congTy_id','don.congTy_id')->join('huyen','congty.huyen_id','huyen.huyen_id')
+                            ->where('don.don_id','like',"%$search%")
+                            ->orwhere('congty.congTy_ten','like',"%$search%")
+                            ->orwhere('congty.congTy_diaChi','like',"%$search%")
+                            ->orwhere('huyen.huyen_ten','like',"%$search%")
+                            ->get();
+        if($request->huyen!=0){
+            $all_don=$all_don->where('huyen_id',$request->huyen);
+        }
+        if($request->loai!=0){
+            $all_don=$all_don->where('loai_id',$request->loai);
+        }
+        if($request->nam!=0){
+            $all_don=$all_don->where('nam',$request->nam);
+        }
+        
+        
+		$excel = new PHPExcel();
+		$excel->createSheet();
+		$activeSheet = $excel->setActiveSheetIndex(1);
+		$activeSheet->setTitle( "Dữ liệu đơn" );
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+		$excel->getActiveSheet()->getColumnDimension('B')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('H')->setWidth(90);
+		
+
+		$excel->getActiveSheet()->getStyle('A2:I2')->getFont()->setBold(true);
+
+		$activeSheet->setCellValue('A2', 'STT')
+			->setCellValue('B2', 'Số đơn')
+			->setCellValue('C2', 'Mã đơn')
+			->setCellValue('D2', 'Ngày nộp đơn')
+			->setCellValue('E2', 'Ngày công bố đơn')
+			->setCellValue('F2', 'Tên đơn vị nộp đơn')
+			->setCellValue('G2', 'Địa chỉ' )
+            ->setCellValue('H2', 'Thông tin các nhóm  bảo hộ' );
+
+            
+
+		$numRow = 3;
+		$stt = 1;
+		foreach ($all_don as $value) {
+                $nhom=DB::table('don')->where('don.don_id',$value->don_id)
+                                ->join('nhomLienKet','don.don_id','nhomLienKet.don_id')
+                                ->join('nhom','nhom.nhom_id','nhomLienKet.nhom_id')->get();
+                $nhom_data=""; 
+                foreach($nhom as $nhom){
+                    $nhom_data=$nhom_data.$nhom->nhom_ten.": ".$nhom->chiTiet."\n";
+                }
+                $stt_string=''.$stt;
+				$excel->getActiveSheet()->setCellValue('A' . $numRow, $stt_string);
+			    $excel->getActiveSheet()->setCellValue('B' . $numRow, $value->don_soDon);			    
+			    $excel->getActiveSheet()->setCellValue('C' . $numRow, $value->don_id );
+			    $excel->getActiveSheet()->setCellValue('D' . $numRow, $value->ngayNop );
+			    $excel->getActiveSheet()->setCellValue('E' . $numRow, $value->ngayCongBo);
+			    $excel->getActiveSheet()->setCellValue('F' . $numRow, $value->congTy_ten);
+			    $excel->getActiveSheet()->setCellValue('G' . $numRow, $value->congTy_diaChi );
+                $excel->getActiveSheet()->setCellValue('H' . $numRow, $nhom_data );
+
+			    $numRow++;
+
+			    
+				$stt++;
+		}
+        //PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('duLieuBang.xlsx');
+
+		header('Content-type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment; filename="duLieuBang.xls"');
+        ob_end_clean();
+		PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('php://output'); //Khi up site thày thành Excel5
+
+        
+        
+       
+        return to_route('admin.all_category') ;
+    }
 
       
 

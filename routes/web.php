@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function() {
 
         Route::get('/active/{category_id}',[DonController::class,'active_category_product'])
         ->name('admin.active_category');
+        Route::get('xuatExcel',[DonController::class,'print_to_excel'])->name('admin.print_don_to_excel');
     });
 
     // Bằng

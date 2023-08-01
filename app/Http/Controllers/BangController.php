@@ -354,8 +354,10 @@ class BangController extends Controller
 		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
 		$excel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
 		$excel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
-		$excel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
-		$excel->getActiveSheet()->getColumnDimension('I')->setWidth(30);
+		$excel->getActiveSheet()->getColumnDimension('H')->setWidth(90);
+		$excel->getActiveSheet()->getColumnDimension('I')->setWidth(90);
+        $excel->getActiveSheet()->getColumnDimension('j')->setWidth(30);
+
 		$excel->getActiveSheet()->getStyle('A2:I2')->getFont()->setBold(true);
 
 		$activeSheet->setCellValue('A2', 'STT')
@@ -365,19 +367,21 @@ class BangController extends Controller
 			->setCellValue('E2', '(220) Ngày nộp đơn')
 			->setCellValue('F2', '(181) Ngày hết hạn hiệu lực')
 			->setCellValue('G2', '(450) Ngày công bố bằng')
-			->setCellValue('H2', '(731) Tên đơn vị nộp đơn và địa chỉ')
-			->setCellValue('I2', '(511) Thông tin các nhóm  bảo hộ' );
+			->setCellValue('H2', '(731) Tên đơn vị nộp đơn')
+			->setCellValue('I2', '(731) Địa chỉ' )
+            ->setCellValue('j2', '(511) Thông tin các nhóm  bảo hộ' );
+
             
 
 		$numRow = 3;
 		$stt = 1;
 		foreach ($all_bang as $value) {
-                $nhom=DB::table('bang')->join('don','don.don_id','bang.don_id')
+                $nhom=DB::table('bang')->where('bang_id',$value->bang_id)->join('don','don.don_id','bang.don_id')
                                 ->join('nhomLienKet','don.don_id','nhomLienKet.don_id')
                                 ->join('nhom','nhom.nhom_id','nhomLienKet.nhom_id')->get();
                 $nhom_data=""; 
                 foreach($nhom as $nhom){
-                    $nhom_data=$nhom_data.$nhom->nhom_ten." ".$nhom->chiTiet.'chr(13)';
+                    $nhom_data=$nhom_data.$nhom->nhom_ten.": ".$nhom->chiTiet."\n";
                 }
                 $stt_string=''.$stt;
 				$excel->getActiveSheet()->setCellValue('A' . $numRow, $stt_string);
@@ -387,37 +391,26 @@ class BangController extends Controller
 			    $excel->getActiveSheet()->setCellValue('E' . $numRow, $value->ngayNop );
 			    $excel->getActiveSheet()->setCellValue('F' . $numRow, $value->ngayKetThuc);
 			    $excel->getActiveSheet()->setCellValue('G' . $numRow, $value->ngayHieuLuc);
-			    $excel->getActiveSheet()->setCellValue('H' . $numRow, $value->congTy_ten.'chr(13)'.$value->congTy_diaChi);
-			    $excel->getActiveSheet()->setCellValue('I' . $numRow, $nhom_data );
+			    $excel->getActiveSheet()->setCellValue('H' . $numRow, $value->congTy_ten);
+			    $excel->getActiveSheet()->setCellValue('I' . $numRow, $value->congTy_diaChi );
+                $excel->getActiveSheet()->setCellValue('J' . $numRow, $nhom_data );
 
 			    $numRow++;
 
-			    /* $excel->getActiveSheet()->setCellValue('E' . $numRow, $value->getDataNguoiHuongDan( 'ten' ) );
-			    $excel->getActiveSheet()->setCellValue('F' . $numRow, $value->getDataDiem( 'diem', 'nguoi-huong-dan' ) );
-			    $excel->getActiveSheet()->setCellValue('G' . $numRow, $value->getDataDiem( 'nhanxet', 'nguoi-huong-dan' ) );
-			    $excel->getActiveSheet()->setCellValue('H' . $numRow, $value->getNgayBatDauThucTap() );
-			    $excel->getActiveSheet()->setCellValue('I' . $numRow, $value->getNgayKetThucThucTap() ); */
-
-			    $numRowMergePrevious = $numRow - 1;
-			    /* $activeSheet->mergeCells("A$numRowMergePrevious:A$numRow");
-			    $activeSheet->mergeCells("B$numRowMergePrevious:B$numRow");
-			    $activeSheet->mergeCells("C$numRowMergePrevious:C$numRow");
-			    $activeSheet->mergeCells("D$numRowMergePrevious:D$numRow"); */
-
-				$numRow++;
+			    
 				$stt++;
 		}
         //PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('duLieuBang.xlsx');
 
 		header('Content-type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment; filename="duLieuBang.xlsx"');
+		header('Content-Disposition: attachment; filename="duLieuBang.xls"');
         ob_end_clean();
 		PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('php://output'); //Khi up site thày thành Excel5
 
         
         
        
-        return to_route('admin.all_brand')->with('success', 'Xuất file thành công') ;
+        return to_route('admin.all_brand') ;
     
   
   }
