@@ -10,7 +10,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     @include('common.alert')
-  <a class="btn btn-success " href="{{  route('admin.new_category')}}" type="button" style="margin-bottom: 10px;">Thêm</a>
+  
     <div class="panel-heading">
       Liệt kê Đơn
     </div>
@@ -61,11 +61,12 @@
         </div>
         </form>
         <br>
-        <a href="{{ route('admin.print_don_to_excel') }}"
-                 class="active btn btn-sm btn-success " ui-toggle-class="">
+        <form action=""></form>
+        <button type="submit" class="active btn btn-sm btn-success "ui-toggle-class=""><a href="{{ route('admin.print_don_to_excel',['huyen'=>$data->huyen,'loai'=>$data->loai,'nam'=>$data->nam,'search'=>$data->search]) }}">
                  Xuất ra excel
-              </a>                       
+              </a></button>
       </div>
+      
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">

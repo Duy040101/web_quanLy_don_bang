@@ -1,5 +1,5 @@
-@extends('admin_layout')
-@section('admin_content')
+@extends('user_layout')
+@section('user_content')
 <style>
 .edit{
   color: #fff!important;
@@ -9,7 +9,6 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     @include('common.alert')
-  
     <div class="panel-heading">
       Liệt kê Bằng
     </div>
@@ -62,7 +61,7 @@
         
         <br>
         
-        <a href="{{ route('admin.print_to_excel') }}"
+        <a href="{{ route('user.bang_print_to_excel') }}"
                  class="active btn btn-sm btn-success " ui-toggle-class="">
                  Xuất ra excel
               </a>                
@@ -100,19 +99,11 @@
 
             </span></a></td>  
             <td style="width: 123px;text-align:center">
-            <a href="{{ route('admin.bang_detail',['bang_id' => $bang->bang_id ,'don_id' => $bang->don_id ]) }}"
+            <a href="{{ route('user.bang_detail',['bang_id' => $bang->bang_id ,'don_id' => $bang->don_id ]) }}"
                  class="active btn btn-sm btn-success " ui-toggle-class="">
                  <i class="fa fa-solid fa-eye"  style="font-size: 18px;"></i>
               </a>
-              <a href="{{ route('admin.edit_brand',['bang_id' => $bang->bang_id, 'don_id' => $bang->don_id]) }}"
-                 class="active btn btn-sm btn-success " ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-active" style="font-size: 18px;"></i>
-              </a>
-              <a href="{{  route('admin.delete_brand',['bang_id'=>$bang->bang_id, 'don_id' => $bang->don_id ]) }}" 
-              onclick="return confirm('Bạn có chắc muốn xóa Bằng này không?')"
-              class="edit btn btn-sm btn-danger" ui-toggle-class="">
-                <i class="fa fa-times text" style="font-size: 18px;"></i>
-              </a>
+              
             </td>
           </tr>
           @endforeach 

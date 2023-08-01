@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>admin</title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -77,8 +77,8 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
         <header class="header fixed-top clearfix">
             <!--logo start-->
             <div class="brand">
-                <a href="{{route('admin.index')}}" class="logo">
-                    admin
+                <a href="{{route('user.index')}}" class="logo">
+                
                 </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
@@ -96,8 +96,9 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                     </li>
                     <li>
                     <!-- user login dropdown start-->
-                        <a href="{{route('admin.logout')}}" class="form-control login">Đăng xuất</a>
-                        </li>
+                    <a href="{{route('login')}}" class="form-control login" style="tex-align: center   ">Đăng nhập</a>
+
+                        
                     </li>
                     <!-- user login dropdown end -->
 
@@ -113,7 +114,7 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                 <div class="leftside-navigation">
                     <ul class="sidebar-menu" id="nav-accordion">
                         <li>
-                            <a  href="{{ route('admin.index') }}" class="{{ Route::currentRouteName() == 'admin.index' ? 'active' : '' }}">
+                            <a  href="{{ route('user.index') }}" class="{{ Route::currentRouteName() == 'user.index' ? 'active' : '' }}">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Tổng quan</span>
                             </a>
@@ -121,67 +122,12 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
                         <!-- Liệt kê -->
                         
                         
-                        <!-- Thêm Đơn -->
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.new_don_KD','admin.new_don_GPHI']) ? 'active' : '' }}">
-                                
-                                <span>Thêm Đơn</span>
-                            </a>
-                            <ul class="sub" style="{{ in_array(Route::currentRouteName(), ['admin.new_category', 'admin.new_don_KD','admin.new_don_gphi']) ? 'display: block;' : 'display: none;' }}">
-                                <li class="{{ Route::currentRouteName() == 'admin.new_category' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.new_category') }}">Nhãn hiệu (NH/NHTT/NHCN)</a></li>
-                                
-                                <li class="{{ Route::currentRouteName() == 'admin.new_don_KD' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.new_don_KD') }}">Kiểu dáng/Kiểu dáng công nghiệp (KD/KDCN)</a>
+                        <li class="{{ Route::currentRouteName() == 'user.all_don' ? 'active' : '' }}">
+                                    <a href="{{ route('user.all_don') }}">Tất cả Đơn</a>
                                 </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.new_don_GPHI' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.new_don_GPHI') }}">Sáng chế/Giải pháp hữu ích (SC/GPHI)</a>
+                        <li class="{{ Route::currentRouteName() == 'user.all_bang' ? 'active' : '' }}">
+                                    <a href="{{ route('user.all_bang') }}">Tất cả Bằng</a>
                                 </li>
-                                
-                            </ul>
-                        </li>
-                        <!-- Thêm Bằng -->
-                        <li class="sub-menu">
-                            <a href="{{ route('admin.add_brand' )}}">Thêm bằng</a>
-                            <!-- <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['', 'admin.add_brand']) ? 'active' : '' }}">
-                                
-                                <span>Thêm Bằng</span>
-                            </a>
-                            <ul class="sub">
-                                <li class="{{ Route::currentRouteName() == 'admin.add_brand' ? 'active': '' }}">
-                                    <a href="{{ route('admin.add_brand' )}}">Nhãn hiệu (NH)</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
-                                    <a href="{{route('admin.all_brand')}}">Nhãn hiệu tập thể (NHTT)</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
-                                    <a href="{{route('admin.all_brand')}}">Kiểu dáng công nghiệp (KDCN)</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'admin.all_brand' ? 'active' : ''}}">
-                                    <a href="{{route('admin.all_brand')}}">Sáng chế/Giải pháp hữu ich (SC/GPHI)</a>
-                                </li>
-                                
-                            </ul> -->
-                        </li>
-
-                       
-                        <!-- thống kê -->
-                        <li class="sub-menu">
-                            <a href="javascript:;" class="{{ in_array(Route::currentRouteName(), ['admin.all_brand', 'admin.all_category']) ? 'active' : '' }}">
-                                
-                                <span>Thống kê</span>
-                            </a>
-                            <ul class="sub" style="{{ in_array(Route::currentRouteName(), ['admin.all_brand', 'admin.all_category']) ? 'display: block;' : 'display: none;' }}">
-                                
-                                <li class="{{ Route::currentRouteName()=='admin.all_category' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.all_category') }}">Tất cả Đơn</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName()=='admin.all_brand' ? 'active' : '' }}">
-                                    <a href="{{ route('admin.all_brand') }}">Tất cả Bằng</a>
-                                </li>
-                                
-                            </ul>
-                        </li>
                         
                     </ul>
                 </div>
@@ -192,7 +138,8 @@ Smar tphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Son
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper" style="color:black;">
-				@yield('admin_content')
+            @yield('user_content')
+
                 
             </section>
             <!-- footer -->

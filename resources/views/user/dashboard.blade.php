@@ -1,5 +1,5 @@
-@extends('admin_layout')
-@section('admin_content')
+@extends('user_layout')
+@section('user_content')
 <style>
 .edit{
   color: #fff!important;

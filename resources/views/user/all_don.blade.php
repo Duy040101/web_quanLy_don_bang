@@ -1,20 +1,19 @@
-@extends('admin_layout')
-@section('admin_content')
+@extends('user_layout')
+@section('user_content')
 <style>
 .edit{
   color: #fff!important;
 
 }
 </style>
+
 <div class="table-agile-info">
   <div class="panel panel-default">
     @include('common.alert')
-  
     <div class="panel-heading">
-      Liệt kê Bằng
+      Liệt kê Đơn
     </div>
     
-    <div class="row w3-res-tb">
     <div class="row ">
     {{csrf_field()}}
       <form action="">
@@ -59,15 +58,14 @@
           <br>
         <button class="active btn btn-sm btn-success ">Áp dụng</button>
         </div>
-        
+        </form>
         <br>
-        
-        <a href="{{ route('admin.print_to_excel') }}"
-                 class="active btn btn-sm btn-success " ui-toggle-class="">
+        <form action=""></form>
+        <button type="submit" class="active btn btn-sm btn-success "ui-toggle-class=""><a href="{{ route('user.don_print_to_excel') }}">
                  Xuất ra excel
-              </a>                
+              </a></button>
       </div>
-      </form>
+      
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
@@ -78,7 +76,7 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th>Mã Bằng</th>
+          
             <th>Mã Đơn</th>
             <th>Hình ảnh</th>
             <th>Đơn vị nộp Đơn</th>
@@ -86,33 +84,24 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($all_bang as $key=>$bang)
+          @foreach($don as $key => $all_don)
           <tr>
            
-            <td><a href="">{{$bang->bang_id}}</a></td>
-            <td><a href="">{{$bang->don_id}}</a></td>
+            <td><a href="">{{$all_don->don_id}}</a></td>
             <td><a href=""><span class="text-ellipsis">
-            <img src="{{asset('upload/'.$bang->image)}}" alt="Bằng này không có hình ảnh" height="145" width="200">
+            <img src="{{asset('upload/'.$all_don->image)}}" alt="lỗi" height="145" width="200">
                   
             </span> </a></td>
             <td><a href=""><span class="text-ellipsis">
-                {{$bang->congTy_ten}}
+                {{$all_don->congTy_ten}}
 
             </span></a></td>  
             <td style="width: 123px;text-align:center">
-            <a href="{{ route('admin.bang_detail',['bang_id' => $bang->bang_id ,'don_id' => $bang->don_id ]) }}"
+              <a href="{{ route('user.don_detail',['don_id' => $all_don->don_id]) }}"
                  class="active btn btn-sm btn-success " ui-toggle-class="">
-                 <i class="fa fa-solid fa-eye"  style="font-size: 18px;"></i>
+                 <i class="fa-solid fa-eye" style="font-size: 18px;"></i>
               </a>
-              <a href="{{ route('admin.edit_brand',['bang_id' => $bang->bang_id, 'don_id' => $bang->don_id]) }}"
-                 class="active btn btn-sm btn-success " ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-active" style="font-size: 18px;"></i>
-              </a>
-              <a href="{{  route('admin.delete_brand',['bang_id'=>$bang->bang_id, 'don_id' => $bang->don_id ]) }}" 
-              onclick="return confirm('Bạn có chắc muốn xóa Bằng này không?')"
-              class="edit btn btn-sm btn-danger" ui-toggle-class="">
-                <i class="fa fa-times text" style="font-size: 18px;"></i>
-              </a>
+              
             </td>
           </tr>
           @endforeach 
@@ -127,7 +116,6 @@
             
           </div>
           <div class="col-sm-7 text-right text-center-xs">                
-          
           </div>
       </div>
        

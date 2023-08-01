@@ -5,7 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DonController;
 use App\Http\Controllers\BangController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,9 @@ use App\Http\Controllers\CheckoutController;
 Route::get('/login',[AdminController::class,'index'])->name('login');
 Route::post('/submit-login',[AdminController::class,'login'])->name('admin.submit_login');
 
-Route::prefix('admin')->group(function() {
-    Route::get('',[AdminController::class,'index'])->name('admin.index');
-    
+Route::middleware(['auth'])->prefix('admin')->group(function() {
+    Route::get('',[AdminController::class,'showDashboard'])->name('admin.index');
+    Route::get('/logout',[AdminController::class,'logout'])->name('admin.logout');
     // Đơn
     Route::prefix('Don')->group(function() {
         Route::get('',[DonController::class,'all_don'])
@@ -89,10 +90,7 @@ Route::prefix('admin')->group(function() {
         ->name('admin.update_brand'); 
         Route::get('/delete/{bang_id},{don_id}',[BangController::class,'delete_brand_product'])
         ->name('admin.delete_brand');
-        Route::get('/unactive/{brand_id}',[BangController::class,'unactive_brand_product'])
-        ->name('admin.unactive_brand');
-        Route::get('/active/{brand_id}',[BangController::class,'active_brand_product'])
-        ->name('admin.active_brand');
+       
         Route::get('detail/{bang_id},{don_id}',[BangController::class,'bang_detail'])->name('admin.bang_detail');
         Route::get('xuatExcel',[BangController::class,'print_to_excel'])->name('admin.print_to_excel');
     });
@@ -101,4 +99,22 @@ Route::prefix('admin')->group(function() {
 });
 
 //User
-Route::get('/',[adminController::class,'index'])->name('home_page');
+Route::get('/',[UserController::class,'index'])->name('user.index');
+Route::prefix('user')->group(function() {
+    Route::prefix('Don')->group(function() {
+        Route::get('',[UserController::class,'all_don'])
+        ->name('user.all_don');
+        Route::get('detail/{don_id}',[UserController::class,'don_detail'])->name('user.don_detail');
+        
+       
+        Route::get('xuatExcel',[UserController::class,'don_print_to_excel'])->name('user.don_print_to_excel');
+    });
+    Route::prefix('Bang')->group(function() {
+        Route::get('',[UserController::class,'all_bang'])
+        ->name('user.all_bang');
+        Route::get('detail/{bang_id},{don_id}',[UserController::class,'bang_detail'])->name('user.bang_detail');
+        
+       
+        Route::get('xuatExcel',[UserController::class,'bang_print_to_excel'])->name('user.bang_print_to_excel');
+    });
+});

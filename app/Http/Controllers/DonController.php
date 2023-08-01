@@ -233,7 +233,7 @@ class DonController extends Controller
         $data['don_tenTG'] = $request->tacGia;
         $data['trangThai']=0;
 
-        $data['loai_id']=4;
+        $data['loai_id']=5;
 
         $year=Carbon::create($request->NgayCongBo)->year;
         $data['don_nam']=$year;
@@ -343,7 +343,7 @@ class DonController extends Controller
 
         $data['trangThai']=0;
 
-        $data['loai_id']=5;
+        $data['loai_id']=6;
 
         $year=Carbon::create($request->NgayCongBo)->year;
         $data['don_nam']=$year;
@@ -802,7 +802,7 @@ class DonController extends Controller
         $data=$request;
         $huyen=DB::table('huyen')->get();
         $loai=DB::table('loai')->get();
-        /* $all_brand_product = DB::table('brand')->where('brand_name','like',"%$search%")->paginate(5); */ 
+        
         $all_don = DB:: table('don')->join('congty','congty.congTy_id','don.congTy_id')->join('huyen','congty.huyen_id','huyen.huyen_id')
                             ->where('don.don_id','like',"%$search%")
                             ->orwhere('congty.congTy_ten','like',"%$search%")
