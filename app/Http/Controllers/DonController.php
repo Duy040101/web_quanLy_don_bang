@@ -883,7 +883,7 @@ class DonController extends Controller
         
         
        
-        return to_route('admin.all_category') ;
+       
     }
 
       

@@ -197,7 +197,7 @@ class UserController extends Controller
         //PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('duLieuBang.xlsx');
 
 		header('Content-type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment; filename="duLieuBang.xls"');
+		header('Content-Disposition: attachment; filename="duLieuDon.xls"');
         ob_end_clean();
 		PHPExcel_IOFactory::createWriter($excel, 'Excel5')->save('php://output'); //Khi up site thày thành Excel5
 

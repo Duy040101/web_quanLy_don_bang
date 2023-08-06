@@ -60,10 +60,10 @@
         </div>
         </form>
         <br>
-        <form action=""></form>
-        <button type="submit" class="active btn btn-sm btn-success "ui-toggle-class=""><a href="{{ route('user.don_print_to_excel') }}">
+        
+        <a href="{{ route('user.don_print_to_excel') }}" class="active btn btn-sm btn-success "ui-toggle-class="">
                  Xuất ra excel
-              </a></button>
+              </a>
       </div>
       
       <div class="col-sm-4">

@@ -62,7 +62,7 @@
         </form>
         <br>
         <form action=""></form>
-        <button type="submit" class="active btn btn-sm btn-success "ui-toggle-class=""><a href="{{ route('admin.print_don_to_excel',['huyen'=>$data->huyen,'loai'=>$data->loai,'nam'=>$data->nam,'search'=>$data->search]) }}">
+        <button type="submit" class="active btn btn-sm btn-success "ui-toggle-class=""><a href="{{ route('admin.print_don_to_excel') }}">
                  Xuất ra excel
               </a></button>
       </div>

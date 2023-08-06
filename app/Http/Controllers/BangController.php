@@ -410,7 +410,7 @@ class BangController extends Controller
         
         
        
-        return to_route('admin.all_brand') ;
+       
     
   
   }
