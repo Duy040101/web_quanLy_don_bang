@@ -60,24 +60,16 @@
         </div>
         
         <br>
-        <form onsubmit="return false" action="{{ route('user.bang_print_to_excel') }}">
-        <button type="button"
+        
+        <a href="{{ route('user.bang_print_to_excel') }}"
                  class="active btn btn-sm btn-success " ui-toggle-class="">
                  Xuất ra excel
-                 </button>
-                 </form>
+</a>
+                 
                             
       </div>
       </form>
-      <script>
-        function ajax(){
-          $.ajax({
-            url: $('form').attr('action'),
-            type:'POST',
-            data:{}
-          })
-        }
-      </script>
+      
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
